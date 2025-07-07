@@ -8,7 +8,7 @@ class ProductRepository
 {
     public function all()
     {
-        return Product::with(['category', 'laboratory', 'unit'])->get();
+        return Product::with(['category', 'lab', 'type', 'presentation'])->get();
     }
 
     public function find($id)
