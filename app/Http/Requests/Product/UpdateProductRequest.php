@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Product;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateProductRequest extends FormRequest
+class UpdateProductRequest extends BaseFormRequest
 {
     public function authorize(): bool
     {
@@ -16,7 +16,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($this->product)],
+            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($this->route('product')?->id ?? $this->route('product'))],
             'description' => ['nullable', 'string'],
             'concentration' => ['nullable', 'string', 'max:255'],
             'pharmaceutical_form' => ['required', 'string', 'max:255'],

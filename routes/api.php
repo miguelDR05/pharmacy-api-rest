@@ -12,12 +12,13 @@ Route::prefix('v1')->group(function () {
         Route::get('me', [AuthController::class, 'me']);
         Route::post('logout', [AuthController::class, 'logout']);
 
-        Route::prefix('products')->group(function () {
-            Route::get('/', [ProductController::class, 'index']);
-            Route::post('/', [ProductController::class, 'store']);
-            Route::get('{product}', [ProductController::class, 'show']);
-            Route::put('{product}', [ProductController::class, 'update']);
-            Route::delete('{product}', [ProductController::class, 'destroy']);
-        });
+        Route::apiResource('products', ProductController::class);
+        // Route::prefix('products')->group(function () {
+        //     Route::get('/', [ProductController::class, 'index']);
+        //     Route::post('/', [ProductController::class, 'store']);
+        //     Route::get('{product}', [ProductController::class, 'show']);
+        //     Route::put('{product}', [ProductController::class, 'update']);
+        //     Route::delete('{product}', [ProductController::class, 'destroy']);
+        // });
     });
 });
