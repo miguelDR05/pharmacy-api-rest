@@ -8,7 +8,7 @@ class CategoryRepository
 {
     public function all()
     {
-        return Category::all();
+        return Category::get();
     }
 
     public function find($id)

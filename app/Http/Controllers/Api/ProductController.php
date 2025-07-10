@@ -7,7 +7,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Services\Product\ProductService;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class ProductController extends Controller
@@ -23,7 +23,12 @@ class ProductController extends Controller
     {
         try {
             $products = $this->service->list();
-            return responseApi(true, 'Listado de productos', 'Consulta exitosa', $products);
+            return responseApi(
+                code: 200,
+                title: 'Listado de productos',
+                message: 'Consulta exitosa',
+                data: $products
+            );
         } catch (Throwable $e) {
             return responseApi(false, 'Error', 'No se pudo listar', null, ['error' => $e->getMessage()], 500);
         }
@@ -32,8 +37,16 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         try {
+            $userId = Auth::id();
             $product = $this->service->create($request->validated());
-            return responseApi(true, 'Producto creado', 'Éxito', $product);
+            $product['user_created'] =  $userId;
+            return responseApi(
+
+                true,
+                'Producto creado',
+                'Éxito',
+                $product
+            );
         } catch (Throwable $e) {
             return responseApi(false, 'Error', 'No se pudo crear', null, ['error' => $e->getMessage()], 500);
         }

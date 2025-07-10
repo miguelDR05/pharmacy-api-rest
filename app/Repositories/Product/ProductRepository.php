@@ -27,8 +27,8 @@ class ProductRepository
         return $product;
     }
 
-    public function delete(Product $product): void
+    public function delete(Product $product): bool
     {
-        $product->delete();
+        return $product->delete();
     }
 }
