@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Category\CategoryRequest;
-
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Services\Category\CategoryService;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
@@ -34,12 +34,12 @@ class CategoryController extends Controller
         }
     }
 
-    public function store(CategoryRequest $request)
+    public function store(StoreCategoryRequest $request)
     {
         try {
-            $userId = Auth::id();
-            $category = $this->service->create($request->validated());
-            $category['user_created'] = $userId;
+            $data = $request->validated();
+            $data['user_created'] = Auth::id();
+            $category = $this->service->create($data);
             return responseApi(
                 code: 200,
                 title: 'Categoría creada',
@@ -47,7 +47,13 @@ class CategoryController extends Controller
                 data: $category
             );
         } catch (Throwable $e) {
-            return responseApi(false, 'Error', 'No se pudo crear', null, ['error' => $e->getMessage()], 500);
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo crear',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
         }
     }
 
@@ -56,17 +62,46 @@ class CategoryController extends Controller
         return responseApi(true, 'Detalle', 'Detalle de la categoría', $category);
     }
 
-    public function update(CategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $userId = Auth::id();
-        $updated = $this->service->update($category, $request->validated());
-        $data['user_updated'] = $userId;
-        return responseApi(true, 'Actualizado', 'Categoría actualizada correctamente', $updated);
+        try {
+            $data = $request->validated();
+            $data['user_updated'] = Auth::id();
+            $updated = $this->service->update($category, $data);
+            return responseApi(
+                code: 200,
+                title: 'Categoría actualizada',
+                message: 'Categoría actualizada correctamente',
+                data: $updated
+            );
+        } catch (Throwable $e) {
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo crear',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
+        }
     }
 
     public function destroy(Category $category)
     {
-        $this->service->delete($category);
-        return responseApi(true, 200, 'Eliminado', 'Categoría eliminada correctamente');
+        try {
+            $this->service->delete($category, Auth::id());
+            return responseApi(
+                code: 200,
+                title: 'Categoría eliminada',
+                message: 'Categoría eliminada correctamente',
+            );
+        } catch (Throwable $e) {
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo eliminar',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
+        }
     }
 }

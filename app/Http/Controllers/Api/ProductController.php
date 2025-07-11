@@ -37,18 +37,23 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         try {
-            $userId = Auth::id();
-            $product = $this->service->create($request->validated());
-            $product['user_created'] =  $userId;
+            $data = $request->validated();
+            $data['user_created'] = Auth::id(); // Agrega el usuario autenticado
+            $product = $this->service->create($data);
             return responseApi(
-
-                true,
-                'Producto creado',
-                'Éxito',
-                $product
+                code: 200,
+                title: 'Producto creada',
+                message: 'Éxito',
+                data: $product
             );
         } catch (Throwable $e) {
-            return responseApi(false, 'Error', 'No se pudo crear', null, ['error' => $e->getMessage()], 500);
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo crear',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
         }
     }
 
@@ -60,20 +65,39 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         try {
-            $updated = $this->service->update($product, $request->validated());
-            return responseApi(true, 'Producto actualizado', 'Éxito', $updated);
+            $data = $request->validated();
+            $data['user_updated'] = Auth::id();
+            $updated = $this->service->update($product, $data);
+            return responseApi(
+                code: 200,
+                title: 'Categoría actualizada',
+                message: 'Categoría actualizada correctamente',
+                data: $updated
+            );
         } catch (Throwable $e) {
-            return responseApi(false, 'Error', 'No se pudo actualizar', null, ['error' => $e->getMessage()], 500);
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo crear',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
         }
     }
 
     public function destroy(Product $product)
     {
         try {
-            $this->service->delete($product);
+            $this->service->delete($product, Auth::id());
             return responseApi(true, 'Producto eliminado', 'Éxito');
         } catch (Throwable $e) {
-            return responseApi(false, 'Error', 'No se pudo eliminar', null, ['error' => $e->getMessage()], 500);
+            return responseApi(
+                success: false,
+                title: 'Error',
+                message: 'No se pudo eliminar',
+                data: ['error' => $e->getMessage()],
+                code: 500
+            );
         }
     }
 }

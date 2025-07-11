@@ -3,6 +3,7 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
+use Carbon\Carbon;
 
 class ProductRepository
 {
@@ -27,8 +28,12 @@ class ProductRepository
         return $product;
     }
 
-    public function delete(Product $product): bool
+    public function delete(Product $product, $userId): bool
     {
-        return $product->delete();
+        return $product->update([
+            'active' => 0,
+            'user_updated' => $userId,
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

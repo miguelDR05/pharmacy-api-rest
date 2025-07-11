@@ -14,9 +14,11 @@ class UpdateProductRequest extends BaseFormRequest
 
     public function rules(): array
     {
+        /** @var \Illuminate\Http\Request $this */
+        $productId = (int) $this->route('product');
         return [
             'name' => ['required', 'string', 'max:255'],
-            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($this->route('product')?->id ?? $this->route('product'))],
+            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($this->route('product'))],
             'description' => ['nullable', 'string'],
             'concentration' => ['nullable', 'string', 'max:255'],
             'pharmaceutical_form' => ['required', 'string', 'max:255'],

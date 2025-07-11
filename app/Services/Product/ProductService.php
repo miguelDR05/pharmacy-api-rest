@@ -58,13 +58,13 @@ class ProductService
         }
     }
 
-    public function delete(Product $product): void
+    public function delete(Product $product, $userId): void
     {
         DB::beginTransaction();
 
         try {
             if ($product->image) deleteImage($product->image);
-            $this->repo->delete($product);
+            $this->repo->delete($product, $userId);
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
