@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SanitizesTimestamps;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, SanitizesTimestamps;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +25,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'active'
+        'active',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**

@@ -27,6 +27,9 @@ class AuthService
         }
 
         $token = $user->createToken('api-token')->plainTextToken;
+        // $expiresAt = now()->setMicrosecond(0);
+
+        // $token = $user->createToken('api-token', ['*'], $expiresAt)->plainTextToken;
 
         return [
             'token' => $token,
