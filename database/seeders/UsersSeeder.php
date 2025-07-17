@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UsersSeeder extends Seeder
 {
@@ -20,6 +21,9 @@ class UsersSeeder extends Seeder
             'email' => 'admin@farmacia.com',
             'password' => Hash::make('admin123'),
             'active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'deleted_at' => null
         ]);
 
         User::create([
@@ -28,6 +32,9 @@ class UsersSeeder extends Seeder
             'email' => 'cajero@farmacia.com',
             'password' => Hash::make('cajero123'),
             'active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'deleted_at' => null
         ]);
     }
 }

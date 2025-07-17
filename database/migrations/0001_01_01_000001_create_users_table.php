@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('active')->default(true);
             $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(0);
+            $table->softDeletes(0);
 
             $table->foreign('role_id')->references('id')->on('roles');
         });

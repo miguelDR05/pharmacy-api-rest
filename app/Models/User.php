@@ -8,27 +8,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Traits\SanitizesTimestamps;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, SanitizesTimestamps;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
+    public $timestamps = true; // O no poner nada (por defecto es true)
+
     protected $fillable = [
         'role_id',
         'name',
         'email',
         'password',
         'active',
-        'created_at',
-        'updated_at',
-        'deleted_at'
     ];
 
     /**

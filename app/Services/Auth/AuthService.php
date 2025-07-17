@@ -26,13 +26,13 @@ class AuthService
             ]);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
-        // $expiresAt = now()->setMicrosecond(0);
+        $expiresAt = now()->addDays(30)->floorSecond();
+        $token = $user->createToken('api-token', ['*'], $expiresAt);
 
-        // $token = $user->createToken('api-token', ['*'], $expiresAt)->plainTextToken;
+
 
         return [
-            'token' => $token,
+            'token' => $token->plainTextToken,
             'user' => $user,
         ];
     }
