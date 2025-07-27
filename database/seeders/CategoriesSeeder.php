@@ -14,10 +14,8 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         $userId = 1;
-        Category::insert([
-            ['name' => 'Antibióticos', 'user_created' => $userId],
-            ['name' => 'Analgésicos', 'user_created' => $userId],
-            ['name' => 'Vitaminas', 'user_created' => $userId],
-        ]);
+        Category::create(['name' => 'Antibióticos', 'user_created' => $userId],);
+        Category::create(['name' => 'Analgésicos', 'user_created' => $userId],);
+        Category::create(['name' => 'Vitaminas', 'user_created' => $userId],);
     }
 }

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_created')->nullable();
             $table->unsignedBigInteger('user_updated')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

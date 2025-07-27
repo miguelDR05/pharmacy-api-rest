@@ -14,9 +14,19 @@ class ClientsSeeder extends Seeder
     public function run(): void
     {
         $userId = 1;
-        Client::insert([
-            ['dni' => '12345678', 'name' => 'Juan Pérez', 'user_created' => $userId],
-            ['dni' => '87654321', 'name' => 'María López', 'user_created' => $userId],
+
+        // Primer cliente
+        Client::create([
+            'dni' => '12345678',
+            'name' => 'Juan Pérez',
+            'user_created' => $userId,
+        ]);
+
+        // Segundo cliente
+        Client::create([
+            'dni' => '87654321',
+            'name' => 'María López',
+            'user_created' => $userId,
         ]);
     }
 }

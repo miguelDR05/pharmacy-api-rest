@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use SoftDeletes;
 
-    protected $fillable = ['name', 'active', 'user_created', 'user_updated'];
+    protected $fillable = ['name', 'active', 'user_created', 'user_updated', 'updated_at'];
 
     public function products()
     {

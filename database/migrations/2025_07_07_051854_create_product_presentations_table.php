@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name')->unique(); // Ej: Caja, Frasco, Ampolla
             $table->boolean('active')->default(true);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

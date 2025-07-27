@@ -34,7 +34,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_created')->nullable();
             $table->unsignedBigInteger('user_updated')->nullable();
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('lab_id')->references('id')->on('labs');

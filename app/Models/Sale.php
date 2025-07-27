@@ -3,13 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
-    use SoftDeletes;
 
-    protected $fillable = ['sale_date', 'total', 'client_id', 'user_id', 'active', 'user_created', 'user_updated'];
+    protected $fillable = [
+        'sale_date',
+        'total',
+        'client_id',
+        'user_id',
+        'active',
+        'user_created',
+        'user_updated',
+        'updated_at'
+    ];
 
     public function client()
     {

@@ -13,10 +13,8 @@ class ProductTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductType::insert([
-            ['name' => 'Antibiótico'],
-            ['name' => 'Analgésico'],
-            ['name' => 'Multivitamínico'],
-        ]);
+        ProductType::create(['name' => 'Antibiótico']);
+        ProductType::create(['name' => 'Analgésico']);
+        ProductType::create(['name' => 'Multivitamínico']);
     }
 }

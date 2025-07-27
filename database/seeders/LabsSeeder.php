@@ -14,10 +14,8 @@ class LabsSeeder extends Seeder
     public function run(): void
     {
         $userId = 1;
-        Lab::insert([
-            ['name' => 'LabGen', 'user_created' => $userId],
-            ['name' => 'Bayer', 'user_created' => $userId],
-            ['name' => 'Pfizer', 'user_created' => $userId],
-        ]);
+        Lab::create(['name' => 'LabGen', 'user_created' => $userId]);
+        Lab::create(['name' => 'Bayer', 'user_created' => $userId]);
+        Lab::create(['name' => 'Pfizer', 'user_created' => $userId]);
     }
 }

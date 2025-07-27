@@ -13,10 +13,8 @@ class ProductPresentationsSeeder extends Seeder
      */
     public function run(): void
     {
-        ProductPresentation::insert([
-            ['name' => 'Caja'],
-            ['name' => 'Blister'],
-            ['name' => 'Ampolla'],
-        ]);
+        ProductPresentation::create(['name' => 'Caja']);
+        ProductPresentation::create(['name' => 'Blister']);
+        ProductPresentation::create(['name' => 'Ampolla']);
     }
 }

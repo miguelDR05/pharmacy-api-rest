@@ -13,10 +13,8 @@ class RolesSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::insert([
-            ['name' => 'Administrador', 'description' => 'Acceso completo'],
-            ['name' => 'Cajero', 'description' => 'Solo ventas'],
-            ['name' => 'Almacén', 'description' => 'Gestión de inventario'],
-        ]);
+        Role::create(['name' => 'Administrador', 'description' => 'Acceso completo']);
+        Role::create(['name' => 'Cajero', 'description' => 'Solo ventas']);
+        Role::create(['name' => 'Almacén', 'description' => 'Gestión de inventario']);
     }
 }
