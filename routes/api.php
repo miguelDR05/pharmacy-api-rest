@@ -14,6 +14,6 @@ Route::prefix('v1')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
 
         Route::apiResource('category', CategoryController::class);
-        Route::apiResource('products', ProductController::class);
+        Route::apiResource('product', ProductController::class);
     });
 });

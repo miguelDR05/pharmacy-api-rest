@@ -15,10 +15,12 @@ class UpdateProductRequest extends BaseFormRequest
     public function rules(): array
     {
         /** @var \Illuminate\Http\Request $this */
-        $productId = (int) $this->route('product');
+        $productId = $this->route('product')->id;
         return [
+            // Valida que el ID del producto en la ruta exista en la tabla 'products'
+            // 'product' => ['required', 'integer', 'exists:products,id'], // ¡Añade esta línea!
             'name' => ['required', 'string', 'max:255'],
-            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($this->route('product'))],
+            'code' => ['required', 'string', 'max:255', Rule::unique('products', 'code')->ignore($productId)],
             'description' => ['nullable', 'string'],
             'concentration' => ['nullable', 'string', 'max:255'],
             'pharmaceutical_form' => ['required', 'string', 'max:255'],
@@ -38,5 +40,11 @@ class UpdateProductRequest extends BaseFormRequest
     public function messages(): array
     {
         return (new StoreProductRequest)->messages();
+
+        // return array_merge((new StoreProductRequest)->messages(), [
+        //     'product.required' => 'El ID del producto es requerido.',
+        //     'product.integer' => 'El ID del producto debe ser un número entero.',
+        //     'product.exists' => 'El producto especificado no existe.',
+        // ]);
     }
 }
