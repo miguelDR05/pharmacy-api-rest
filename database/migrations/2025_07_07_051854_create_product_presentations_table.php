@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('product_presentations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique(); // Ej: Caja, Frasco, Ampolla
+            $table->unsignedBigInteger('user_created')->nullable();
+            $table->unsignedBigInteger('user_updated')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

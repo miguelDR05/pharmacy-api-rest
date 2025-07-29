@@ -44,9 +44,20 @@ class ProductService
         DB::beginTransaction();
 
         try {
+            // Verifica si 'image' está presente en los datos validados
+            // Y si es una instancia de UploadedFile
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-                if ($product->image) deleteImage($product->image);
+                // Si hay una imagen antigua, la borra
+                if ($product->image) {
+                    deleteImage($product->image);
+                }
+                // Guarda la nueva imagen
                 $data['image'] = saveImage($data['image']);
+            } else {
+                // Si 'image' no está presente O no es un UploadedFile (es decir, el frontend no envió una nueva imagen)
+                // Asegúrate de que el campo 'image' no se actualice accidentalmente en el modelo.
+                // Esto es crucial para preservar la imagen existente.
+                unset($data['image']);
             }
 
             $updated = $this->repo->update($product, $data);

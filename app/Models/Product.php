@@ -25,7 +25,7 @@ class Product extends Model
         'presentation_id',
         'active',
         'user_created',
-        'user_update',
+        'user_updated',
         'updated_at'
     ];
 

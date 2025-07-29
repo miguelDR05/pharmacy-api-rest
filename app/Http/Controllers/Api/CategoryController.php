@@ -7,12 +7,14 @@ use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Services\Category\CategoryService;
 use App\Models\Category;
+use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Category\CategoryComboResource;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class CategoryController extends Controller
 {
-    protected $service;
+    protected CategoryService $service;
 
     public function __construct(CategoryService $service)
     {
@@ -22,12 +24,12 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $category =  $this->service->list();
+            $categories = $this->service->list();
             return responseApi(
                 code: 200,
                 title: 'Listado de categorías',
                 message: 'Consulta exitosa',
-                data: $category
+                data: CategoryResource::collection($categories)
             );
         } catch (Throwable $e) {
             return responseApi(false, 'Error', 'No se pudo listar', null, ['error' => $e->getMessage()], 500);
@@ -44,7 +46,7 @@ class CategoryController extends Controller
                 code: 200,
                 title: 'Categoría creada',
                 message: 'Éxito',
-                data: $category
+                data: new CategoryResource($category) // Usar el Resource para la respuesta
             );
         } catch (Throwable $e) {
             return responseApi(
@@ -59,7 +61,7 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return responseApi(true, 'Detalle', 'Detalle de la categoría', $category);
+        return responseApi(true, 'Categoría', 'Consulta exitosa', new CategoryResource($category));
     }
 
     public function update(UpdateCategoryRequest $request, Category $category)
@@ -72,13 +74,13 @@ class CategoryController extends Controller
                 code: 200,
                 title: 'Categoría actualizada',
                 message: 'Categoría actualizada correctamente',
-                data: $updated
+                data: new CategoryResource($updated) // Usar el Resource para la respuesta
             );
         } catch (Throwable $e) {
             return responseApi(
                 success: false,
                 title: 'Error',
-                message: 'No se pudo crear',
+                message: 'No se pudo actualizar',
                 data: ['error' => $e->getMessage()],
                 code: 500
             );
@@ -89,11 +91,7 @@ class CategoryController extends Controller
     {
         try {
             $this->service->delete($category, Auth::id());
-            return responseApi(
-                code: 200,
-                title: 'Categoría eliminada',
-                message: 'Categoría eliminada correctamente',
-            );
+            return responseApi(true, 'Categoría eliminada', 'Éxito');
         } catch (Throwable $e) {
             return responseApi(
                 success: false,
@@ -102,6 +100,24 @@ class CategoryController extends Controller
                 data: ['error' => $e->getMessage()],
                 code: 500
             );
+        }
+    }
+
+    /**
+     * Obtiene categorías activas para un combo (select).
+     */
+    public function combo()
+    {
+        try {
+            $categories = $this->service->getActiveCategoriesForCombo();
+            return responseApi(
+                code: 200,
+                title: 'Listado de categorías para combo',
+                message: 'Consulta exitosa',
+                data: CategoryComboResource::collection($categories)
+            );
+        } catch (Throwable $e) {
+            return responseApi(false, 'Error', 'No se pudo listar para combo', null, ['error' => $e->getMessage()], 500);
         }
     }
 }

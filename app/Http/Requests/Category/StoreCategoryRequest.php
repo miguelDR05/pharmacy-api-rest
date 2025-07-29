@@ -14,8 +14,8 @@ class StoreCategoryRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            // 'description' => 'nullable|string',
+            'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
+            'active' => ['boolean'],
         ];
     }
 
@@ -23,6 +23,9 @@ class StoreCategoryRequest extends BaseFormRequest
     {
         return [
             'name.required' => 'El nombre de la categoría es obligatorio.',
+            'name.unique' => 'Ya existe una categoría con este nombre.',
+            'name.max' => 'El nombre no puede exceder los 255 caracteres.',
+            'active.boolean' => 'El campo activo debe ser un valor booleano.',
         ];
     }
 }

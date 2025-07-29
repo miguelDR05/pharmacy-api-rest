@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use App\Http\Requests\BaseFormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends BaseFormRequest
 {
@@ -13,9 +14,11 @@ class UpdateCategoryRequest extends BaseFormRequest
 
     public function rules(): array
     {
+        /** @var \Illuminate\Http\Request $this */
+        $categoryId = $this->route('category')->id;
         return [
-            'name' => 'required|string|max:255',
-            // 'description' => 'nullable|string',
+            'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($categoryId)],
+            'active' => ['boolean'],
         ];
     }
 
@@ -23,6 +26,9 @@ class UpdateCategoryRequest extends BaseFormRequest
     {
         return [
             'name.required' => 'El nombre de la categoría es obligatorio.',
+            'name.unique' => 'Ya existe una categoría con este nombre.',
+            'name.max' => 'El nombre no puede exceder los 255 caracteres.',
+            'active.boolean' => 'El campo activo debe ser un valor booleano.',
         ];
     }
 }

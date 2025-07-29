@@ -3,8 +3,9 @@
 namespace App\Services\Category;
 
 use App\Repositories\Category\CategoryRepository;
-use Illuminate\Support\Facades\DB;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class CategoryService
 {
@@ -23,12 +24,11 @@ class CategoryService
     public function create(array $data): Category
     {
         DB::beginTransaction();
-
         try {
             $category = $this->repo->create($data);
             DB::commit();
             return $category;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
@@ -36,29 +36,31 @@ class CategoryService
 
     public function update(Category $category, array $data): Category
     {
-
         DB::beginTransaction();
-
         try {
             $updated = $this->repo->update($category, $data);
             DB::commit();
             return $updated;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
     }
 
-    public function delete(Category $category): void
+    public function delete(Category $category, $userId): void
     {
         DB::beginTransaction();
-
         try {
-            $this->repo->delete($category);
+            $this->repo->delete($category, $userId);
             DB::commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
+    }
+
+    public function getActiveCategoriesForCombo()
+    {
+        return $this->repo->getActiveForCombo();
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Product\ProductResource; // Importa tu Resource
 use Throwable;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -68,6 +69,7 @@ class ProductController extends Controller
         try {
             $data = $request->validated();
             $data['user_updated'] = Auth::id();
+            Log::info($data);
             $updated = $this->service->update($product, $data);
             return responseApi(
                 code: 200,
@@ -79,7 +81,7 @@ class ProductController extends Controller
             return responseApi(
                 success: false,
                 title: 'Error',
-                message: 'No se pudo crear',
+                message: 'No se pudo actualizar',
                 data: ['error' => $e->getMessage()],
                 code: 500
             );

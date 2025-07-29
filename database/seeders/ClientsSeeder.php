@@ -17,14 +17,16 @@ class ClientsSeeder extends Seeder
 
         // Primer cliente
         Client::create([
-            'dni' => '12345678',
-            'name' => 'Juan Pérez',
+            'document_type_id' => 1,
+            'document_number' => '71436151',
+            'name' => 'Segundo Miguel',
             'user_created' => $userId,
         ]);
 
         // Segundo cliente
         Client::create([
-            'dni' => '87654321',
+            'document_type_id' => 2,
+            'document_number' => '20103615080',
             'name' => 'María López',
             'user_created' => $userId,
         ]);

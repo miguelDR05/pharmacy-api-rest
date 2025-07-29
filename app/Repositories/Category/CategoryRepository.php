@@ -3,12 +3,13 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category;
+use Carbon\Carbon; // Importar Carbon
 
 class CategoryRepository
 {
     public function all()
     {
-        return Category::get();
+        return Category::all();
     }
 
     public function find($id)
@@ -27,8 +28,18 @@ class CategoryRepository
         return $category;
     }
 
-    public function delete(Category $category): bool
+    public function delete(Category $category, $userId): bool
     {
-        return $category->delete();
+        // Asumiendo un "soft delete" actualizando 'active' a 0 y registrando user_updated
+        return $category->update([
+            'active' => 0,
+            'user_updated' => $userId,
+            'updated_at' => Carbon::now(),
+        ]);
+    }
+
+    public function getActiveForCombo()
+    {
+        return Category::where('active', 1)->get();
     }
 }

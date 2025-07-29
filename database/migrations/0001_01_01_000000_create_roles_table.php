@@ -27,8 +27,6 @@ return new class extends Migration
                 // Para MySQL, PostgreSQL, SQLite, etc., usamos timestamps() normal
                 $table->timestamps();
             }
-
-            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

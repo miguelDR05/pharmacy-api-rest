@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->boolean('active')->default(true);
+            $table->unsignedBigInteger('user_created')->nullable();
+            $table->unsignedBigInteger('user_updated')->nullable();
             $table->timestamps();
         });
     }

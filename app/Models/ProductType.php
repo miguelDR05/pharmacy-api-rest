@@ -10,6 +10,8 @@ class ProductType extends Model
     protected $fillable = [
         'name',
         'active',
+        'user_created',
+        'user_updated',
         'updated_at'
     ];
 
