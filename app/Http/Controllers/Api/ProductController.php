@@ -8,6 +8,7 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Services\Product\ProductService;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Product\ProductResource; // Importa tu Resource
 use Throwable;
 
 class ProductController extends Controller
@@ -27,7 +28,7 @@ class ProductController extends Controller
                 code: 200,
                 title: 'Listado de productos',
                 message: 'Consulta exitosa',
-                data: $products
+                data: ProductResource::collection($products)
             );
         } catch (Throwable $e) {
             return responseApi(false, 'Error', 'No se pudo listar', null, ['error' => $e->getMessage()], 500);

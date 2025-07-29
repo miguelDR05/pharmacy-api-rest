@@ -29,8 +29,6 @@ class AuthService
         $expiresAt = now()->addDays(30)->floorSecond();
         $token = $user->createToken('api-token', ['*'], $expiresAt);
 
-
-
         return [
             'token' => $token->plainTextToken,
             'user' => $user,
@@ -42,7 +40,7 @@ class AuthService
         $this->authRepository->revokeTokens($user);
     }
 
-    public function me(User $user): User
+    public function user(User $user): User
     {
         return $user;
     }
