@@ -15,14 +15,23 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            DocumentTypesSeeder::class,
-            RolesSeeder::class,
-            UsersSeeder::class,
-            CategoriesSeeder::class,
-            LabsSeeder::class,
-            ProductTypesSeeder::class,
-            ProductPresentationsSeeder::class,
-            ClientsSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
+            // Seeders de tablas sin dependencias complejas o que son maestras
+            DocumentTypeSeeder::class,
+            CategorySeeder::class,
+            LabSeeder::class,
+            ProductTypeSeeder::class,
+            ProductPresentationSeeder::class,
+            SupplierSeeder::class,
+            PurchaseDocumentTypeSeeder::class,
+            // Seeders que dependen de las tablas maestras
+            ClientSeeder::class,
+            ProductSeeder::class,
+            // Seeders de transacciones (Ventas y Compras)
+            // Estos crearán sus respectivos detalles anidados
+            SaleSeeder::class,
+            PurchaseSeeder::class,
         ]);
     }
 }

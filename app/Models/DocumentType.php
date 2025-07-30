@@ -9,7 +9,13 @@ class DocumentType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code', 'active', 'user_created', 'user_updated'];
+    protected $fillable = [
+        'name',
+        'code',
+        'active',
+        'user_created',
+        'user_updated'
+    ];
 
     public function clients()
     {

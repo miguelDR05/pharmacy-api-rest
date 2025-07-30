@@ -2,19 +2,20 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Lab;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LabFactory extends Factory
 {
     protected $model = Lab::class;
 
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => $this->faker->company,
-            'active' => true,
-            'user_created' => 1
+            'name' => $this->faker->unique()->company() . ' Lab', // Nombres de laboratorio únicos
+            'active' => $this->faker->boolean(90),
+            'user_created' => \App\Models\User::factory(),
+            'user_updated' => null,
         ];
     }
 }

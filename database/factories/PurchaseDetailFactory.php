@@ -2,22 +2,27 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\PurchaseDetail;
+use App\Models\Purchase;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PurchaseDetailFactory extends Factory
 {
     protected $model = PurchaseDetail::class;
 
-    public function definition(): array
+    public function definition()
     {
-        $quantity = $this->faker->numberBetween(10, 100);
-        $price = $this->faker->randomFloat(2, 2, 20);
+        $quantity = $this->faker->numberBetween(5, 50);
+        $price = $this->faker->randomFloat(2, 0.5, 30);
+        $subtotal = $quantity * $price;
+
         return [
-            'product_id' => 1,
+            'purchase_id' => Purchase::factory(), // Se sobrescribirá en el seeder
+            'product_id' => Product::factory(), // Se sobrescribirá en el seeder
             'quantity' => $quantity,
             'price' => $price,
-            'subtotal' => $quantity * $price
+            'subtotal' => $subtotal,
         ];
     }
 }
