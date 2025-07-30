@@ -15,6 +15,9 @@ class PurchaseDetail extends Model
         'quantity',
         'price',
         'subtotal',
+        'active',
+        'user_created',
+        'user_updated',
     ];
 
     public function purchase()

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->date('sale_date');
             $table->decimal('total', 10, 2);
             $table->unsignedInteger('client_id')->nullable();
+            // document_type_id
+            $table->unsignedBigInteger('document_type_id')->nullable();
+            $table->string('document_number', 15)->nullable();
+            $table->string('customer_name')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->boolean('active')->default(true);
             $table->unsignedBigInteger('user_created')->nullable();

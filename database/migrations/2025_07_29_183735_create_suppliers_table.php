@@ -11,28 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
-            $table->increments('id');
-            // document_type_id
-            $table->unsignedBigInteger('document_type_id')->nullable();
-            $table->string('document_number', 15)->nullable()->unique();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->increments('id'); // int unsigned auto_increment
+            $table->string('name')->unique();
+            $table->string('ruc', 11)->nullable()->unique(); // RUC opcional pero único si existe
             $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->boolean('active')->default(true);
             $table->unsignedBigInteger('user_created')->nullable();
             $table->unsignedBigInteger('user_updated')->nullable();
-            $table->timestamps();
+            $table->timestamps(); // created_at y updated_at
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('suppliers');
     }
 };

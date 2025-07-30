@@ -15,6 +15,11 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->date('purchase_date');
             $table->decimal('total', 10, 2);
+            // supplier_id
+            $table->unsignedInteger('supplier_id')->nullable();
+            // purchase_document_type_id
+            $table->unsignedInteger('purchase_document_type_id')->nullable();
+            $table->string('document_number', 50)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->boolean('active')->default(true);
             $table->unsignedBigInteger('user_created')->nullable();

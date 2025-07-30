@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->decimal('subtotal', 10, 2);
+            $table->boolean('active')->default(true);
+            $table->unsignedBigInteger('user_created')->nullable();
+            $table->unsignedBigInteger('user_updated')->nullable();
             $table->timestamps();
 
             $table->foreign('purchase_id')->references('id')->on('purchases');
