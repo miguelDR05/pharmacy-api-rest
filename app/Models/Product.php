@@ -28,8 +28,23 @@ class Product extends Model
         'active',
         'user_created',
         'user_updated',
-        'updated_at'
+        'min_stock',
+        'manufacturing_date',
+        'storage_condition_id', // Ahora es clave foránea
+        'requires_prescription',
+        'is_controlled',
     ];
+
+    protected $casts = [
+        'expiration_date' => 'date', // Castea a un objeto Carbon (DateTime)
+        'manufacturing_date' => 'date', // Castea a un objeto Carbon (DateTime)
+        'active' => 'boolean',
+        'requires_prescription' => 'boolean',
+        'is_controlled' => 'boolean',
+        'created_at' => 'datetime', // Opcional, pero buena práctica si los usas en resources
+        'updated_at' => 'datetime', // Opcional, pero buena práctica si los usas en resources
+    ];
+
 
     public function category()
     {
@@ -49,6 +64,12 @@ class Product extends Model
     public function presentation()
     {
         return $this->belongsTo(ProductPresentation::class, 'presentation_id');
+    }
+
+    // --- NUEVA RELACIÓN ---
+    public function storageCondition()
+    {
+        return $this->belongsTo(StorageCondition::class);
     }
 
     public function saleDetails()

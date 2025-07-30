@@ -4,17 +4,20 @@ namespace App\Repositories\Product;
 
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 
 class ProductRepository
 {
     public function all()
     {
-        return Product::with(['category', 'lab', 'type', 'presentation'])->get();
+        // Cargar relaciones para el listado
+        return Product::with(['category', 'lab', 'type', 'presentation', 'storageCondition'])->get();
     }
 
     public function find($id)
     {
-        return Product::findOrFail($id);
+        // Cargar relaciones para el detalle
+        return Product::with(['category', 'lab', 'type', 'presentation', 'storageCondition'])->findOrFail($id);
     }
 
     public function create(array $data): Product
@@ -35,5 +38,10 @@ class ProductRepository
             'user_updated' => $userId,
             'updated_at' => Carbon::now(),
         ]);
+    }
+
+    public function getActiveForCombo()
+    {
+        return Product::where('active', 1)->get();
     }
 }

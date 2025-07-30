@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             DocumentTypeSeeder::class,
             CategorySeeder::class,
             LabSeeder::class,
+            StorageConditionSeeder::class,
             ProductTypeSeeder::class,
             ProductPresentationSeeder::class,
             SupplierSeeder::class,

@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\PurchaseDocumentTypeController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\SaleController;
+use App\Http\Controllers\Api\StorageConditionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -35,6 +36,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('purchase-document-type', PurchaseDocumentTypeController::class);
         Route::apiResource('purchase', PurchaseController::class);
         Route::apiResource('sale', SaleController::class);
+        Route::apiResource('storage-condition', StorageConditionController::class);
 
         // Rutas para combos (filtradas por 'active' y formato label/value)
         Route::get('categories-combo', [CategoryController::class, 'combo']);
@@ -45,5 +47,6 @@ Route::prefix('v1')->group(function () {
         Route::get('clients-combo', [ClientController::class, 'combo']);
         Route::get('suppliers-combo', [SupplierController::class, 'combo']);
         Route::get('purchase-document-types-combo', [PurchaseDocumentTypeController::class, 'combo']);
+        Route::get('storage-conditions-combo', [StorageConditionController::class, 'combo']);
     });
 });

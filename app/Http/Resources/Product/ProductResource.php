@@ -25,6 +25,17 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'code' => $this->code,
+            'description' => $this->description,
+            'batch' => $this->batch,
+            'image' => $this->image,
+            'concentration' => $this->concentration,
+            'pharmaceutical_form' => $this->pharmaceutical_form,
+            'administration_route' => $this->administration_route,
+            'stock' => (int) $this->stock,
+            'price' => (float) $this->price,
+            'expiration_date' => $this->expiration_date ? $this->expiration_date->format('Y-m-d') : null,
+            'batch' => $this->batch,
             'category_id' => $this->category_id,
             'category_name' => $this->whenLoaded('category', function () {
                 return $this->category->name;
@@ -41,11 +52,18 @@ class ProductResource extends JsonResource
             'presentation_name' => $this->whenLoaded('presentation', function () {
                 return $this->presentation->name;
             }),
-            'stock' => $this->stock,
-            'price' => (float) $this->price, // Asegúrate de que el precio sea un número
-            'code' => $this->code,
             'pharmaceutical_form' => $this->pharmaceutical_form,
-            'image' => $fullImageUrl
+            'min_stock' => (int) $this->min_stock,
+            'manufacturing_date' => $this->manufacturing_date ? $this->manufacturing_date->format('Y-m-d') : null,
+            'requires_prescription' => (bool) $this->requires_prescription,
+            'is_controlled' => (bool) $this->is_controlled,
+            // --- CAMBIO AQUÍ: storage_condition_id y storage_condition_label ---
+            'storage_condition_id' => $this->storage_condition_id,
+            'storage_condition_label' => $this->whenLoaded('storageCondition', function () {
+                return $this->storageCondition->label;
+            }),
+            'image' => $fullImageUrl,
+            // status
         ];
     }
 }
