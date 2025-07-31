@@ -15,6 +15,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->date('sale_date');
             $table->decimal('total', 10, 2);
+            $table->decimal('subtotal', 10, 2);       
+            $table->decimal('igv_amount', 10, 2);     
+            $table->decimal('igv_percent', 5, 2)->default(18.00); 
             $table->unsignedInteger('client_id')->nullable();
             // document_type_id
             $table->unsignedBigInteger('document_type_id')->nullable();

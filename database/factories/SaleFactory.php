@@ -32,10 +32,18 @@ class SaleFactory extends Factory
             $documentNumber = $this->faker->numerify('########'); // Genera un número de documento
             $customerName = $this->faker->name(); // Genera un nombre de cliente
         }
+        
+         //$subtotal = $this->faker->randomFloat(2, 10, 1000);
+        $igvPercent = 18.00;
+        //$igvAmount = round($subtotal * ($igvPercent / 100), 2);
+        //$total = round($subtotal + $igvAmount, 2);
 
         return [
             'sale_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'total' => $this->faker->randomFloat(2, 10, 1000),
+            'subtotal' => 0,
+            'igv_percent' => $igvPercent,
+            'igv_amount' => 0,
+            'total' => 0,
             'client_id' => $clientId,
             'document_type_id' => $documentTypeId,
             'document_number' => $documentNumber,

@@ -80,10 +80,19 @@ class SaleSeeder extends Seeder
                     'price' => $price,
                     'subtotal' => $subtotal,
                 ]);
-            }
+            } 
 
             // Recalcular el total de la venta basado en los detalles creados
-            $sale->total = $sale->saleDetails->sum('subtotal');
+            $subtotal = $sale->saleDetails->sum('subtotal');
+            $igvPercent = 18.00;
+            $igvAmount = $subtotal * ($igvPercent / 100);
+            $total = $subtotal + $igvAmount;
+
+            $sale->subtotal = $subtotal;
+            $sale->igv_percent = $igvPercent;
+            $sale->igv_amount = $igvAmount;
+            $sale->total = $total;
+
             $sale->save();
         });
     }

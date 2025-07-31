@@ -12,6 +12,9 @@ class Sale extends Model
     protected $fillable = [
         'sale_date',
         'total',
+        'subtotal',
+        'igv_amount',
+        'igv_percent',
         'client_id',
         'document_type_id',
         'document_number',
